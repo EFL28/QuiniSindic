@@ -141,7 +141,7 @@ export default function SignUpPage() {
         className="Modal"
         overlayClassName="Overlay"
         ariaHideApp={false}
-        style={customStyles}
+        style={customStyles as ReactModal.Styles}
       >
         <div className="flex justify-center items-center flex-col h-full  bg-light dark:bg-dark dark:text-white">
           <div className="font-semibold text-lg mb-4">
