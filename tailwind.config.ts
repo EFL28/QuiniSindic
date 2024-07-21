@@ -8,12 +8,17 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      colors: {
+        "primary": "#5502a6",
+        "primary-hover": "#3a0173",
+        "light": "#f3f0fc",
+        "dark": "#080C1C",
+      },
+      fontFamily: {
+        spartan: ['"League Spartan Variable"', 'sans-serif'],
       },
     },
+    
   },
   plugins: [],
 };
