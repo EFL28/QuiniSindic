@@ -7,6 +7,7 @@ const prisma = new PrismaClient()
 
 export async function POST(request: Request) {
   try {
+    prisma.$connect()
     const { username, email, password } = await request.json()
 
     const email_registered = await prisma.users.findUnique({ where: { email } })
@@ -33,5 +34,8 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error(error)
     return new Response(JSON.stringify({ error: error}), { status: 400 })
+  }
+  finally {
+    prisma.$disconnect()
   }
 }
