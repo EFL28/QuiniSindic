@@ -30,8 +30,8 @@ export async function POST(request: Request) {
     })
 
     return new Response(JSON.stringify("Usuario insertado"), { status: 201 })
-    redirect('/login')
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Something went wrong. Try again.'}), { status: 400 })
+    console.error(error)
+    return new Response(JSON.stringify({ error: error}), { status: 400 })
   }
 }
