@@ -44,7 +44,7 @@ export default function SignUpPage() {
     setModalIsOpen(false);
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
 
     const res = await fetch("/api/register", {
