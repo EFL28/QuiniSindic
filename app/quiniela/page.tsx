@@ -19,7 +19,7 @@ export default function QuinielaPage() {
       const url =
         "https://f7ekq2o916.execute-api.eu-west-3.amazonaws.com/dev/quiniela";
       try {
-        const response = await axios.get(url, { crossdomain: true });
+        const response = await axios.get(url);
         console.log(response.data.body.jornada);
         setMatches(response.data.body.partidos);
         setMatchweek(response.data.body.jornada);
