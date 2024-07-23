@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function Page() {
   return (
     <div className="flex justify-center items-center flex-col h-screen bg-light dark:bg-dark dark:text-white">
-      <Link href={"/"}>
+      <Link href={"/home"}>
         <Image src={Sindic} alt="QuiniSindic logo" width={300} height={300} />
       </Link>
       <div className="text-2xl font-bold">Bienvenidos a QuiniSindic</div>

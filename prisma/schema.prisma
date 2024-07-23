@@ -8,9 +8,28 @@ datasource db {
 }
 
 model Users {
-  id         BigInt   @id @default(autoincrement())
-  email      String   @unique
-  username   String   @unique
-  password   String
-  created_at DateTime @default(now()) @db.Timestamptz(6)
+  id          BigInt        @id @default(autoincrement())
+  email       String        @unique
+  username    String        @unique
+  password    String
+  created_at  DateTime      @default(now()) @db.Timestamptz(6)
+  Pronosticos Pronosticos[]
+}
+
+model Pronosticos {
+  id         BigInt       @id @default(autoincrement())
+  user_id    BigInt?
+  prediction String[]
+  created_at DateTime     @default(now()) @db.Timestamptz(6)
+  matchweek  BigInt?
+  Users      Users?       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  Resultados Resultados[]
+}
+
+model Resultados {
+  id            BigInt       @id @default(autoincrement())
+  prediction_id BigInt?
+  points        BigInt
+  created_at    DateTime     @default(now()) @db.Timestamptz(6)
+  Pronosticos   Pronosticos? @relation(fields: [prediction_id], references: [id], onDelete: Cascade)
 }
