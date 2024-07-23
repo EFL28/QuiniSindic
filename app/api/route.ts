@@ -1,7 +1,7 @@
 import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
 
-// Esta funcion crea una tabla en la base de datos cuando se visite la ruta /api/create-userTable
+// Esta funcion crea una tabla en la base de datos cuando se visite la ruta /api
 export async function GET(request: Request) {
   try {
     await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
