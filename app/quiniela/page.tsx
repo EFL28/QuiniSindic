@@ -1,12 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+
 
 export default function QuinielaPage() {
   const [matches, setMatches] = useState([]);
   const [matchweek, setMatchweek] = useState(0);
   const [username, setUsername] = useState("");
   const [predictions, setPredictions] = useState("");
+  const router = useRouter();
 
   interface SelectedOptions {
     [key: string]: string;
@@ -20,7 +23,6 @@ export default function QuinielaPage() {
         "https://f7ekq2o916.execute-api.eu-west-3.amazonaws.com/dev/quiniela";
       try {
         const response = await axios.get(url);
-        console.log(response.data.body.jornada);
         setMatches(response.data.body.partidos);
         setMatchweek(response.data.body.jornada);
       } catch (error) {
@@ -52,7 +54,7 @@ export default function QuinielaPage() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const url = "/api/getUser";
+      const url = "/api/users/getUser";
       try {
         const response = await axios.get(url);
         setUsername(response.data.user);
@@ -64,7 +66,7 @@ export default function QuinielaPage() {
   }, []);
 
   const handleSave = async () => {
-    const url = "/api/savePredictions";
+    const url = "/api/predictions/savePredictions";
 
     if (Object.keys(selectedOptions).length < matches.length + 1) {
       alert("Debes seleccionar todos los partidos");
@@ -72,8 +74,10 @@ export default function QuinielaPage() {
     }
 
     try {
-      const response = await axios.post(url, { predictions, username, matchweek });
-      console.log(response.data);
+      await axios.post(url, { predictions, username, matchweek });
+      router.push("/groupPrediction");
+      
+      //console.log(response.data);
     } catch (error) {
       console.error("Socio ¿y er furbo donde esta?", error);
     }

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@fontsource-variable/league-spartan": "^5.0.20",
+    "@geist-ui/core": "^2.3.8",
     "@prisma/client": "^5.17.0",
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.44.4",

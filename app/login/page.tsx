@@ -11,7 +11,7 @@ export default function LoginPage() {
     const handleSubmit = async (e: any) => {
       e.preventDefault();
   
-      const res = await fetch("/api/login", {
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -20,9 +20,9 @@ export default function LoginPage() {
       });
       
       const data = await res.json();
-      console.log("data:", data);
+      // console.log("data:", data);
       if (res.ok) {
-        console.log("User registered:", data)
+        // console.log("User registered:", data)
         router.push("/home");
 
         setUser("");

@@ -5,12 +5,13 @@ import quinisindic from "@/public/quinisindic-noBG.png";
 import Link from "next/link";
 import Avvvatars from "avvvatars-react";
 import { useEffect } from "react";
+import axios from "axios";
 
 export default function Header() {
   const [nickname, setNickname] = React.useState("");
 
   useEffect(() => {
-    fetch("/api/getUser", {
+    fetch("/api/users/getUser", {
       method: "GET",
     })
       .then((response) => response.json())
@@ -18,6 +19,16 @@ export default function Header() {
         setNickname(data.user);
       });
   }, []);
+
+  const handleLogout = async () => {
+    const url = "/api/auth/logout";
+    const response = await axios.post(url);
+
+    if (response.status === 200) {
+      window.location.href = "/";
+    }
+
+  }
 
   const toggleMenu = () => {
     // const menu = document.querySelector(".menu");
@@ -69,6 +80,9 @@ export default function Header() {
               <div className="hidden lg:block justify-center ml-4 text-white">
                 {nickname}
               </div>
+            </div>
+            <div className="cursor-pointer" onClick={handleLogout}>
+              Logout
             </div>
           </div>
         </div>

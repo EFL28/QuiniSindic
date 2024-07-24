@@ -47,7 +47,7 @@ export default function SignUpPage() {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
 
-    const res = await fetch("/api/register", {
+    const res = await fetch("/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export default function SignUpPage() {
 
     const data = await res.json();
     if (res.ok) {
-      console.log("User registered:", data);
+      // console.log("User registered:", data);
       openModal();
     } else {
       console.error("Error:", data.error);

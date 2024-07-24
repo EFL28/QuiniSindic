@@ -5,7 +5,7 @@ import { serialize } from "cookie";
 import { cookies } from 'next/headers'
 
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || "POWEIUBFVU";
+const jwtSecret = process.env.JWT_SECRET;
 
 export async function POST(request: Request) {
   try {
@@ -34,7 +34,11 @@ export async function POST(request: Request) {
       });
     }
 
-    const token = jwt.sign({ user: user, password: password }, JWT_SECRET, { expiresIn: "1w" });
+    if (!jwtSecret) {
+      throw new Error("JWT_SECRET is not defined in the environment variables");
+    }
+
+    const token = jwt.sign({ user: user, password: password }, jwtSecret, { expiresIn: "1w" });
     //console.log("token en route.ts:",token);
 
     const cookie = serialize("auth", token, {
@@ -61,10 +65,10 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET(request: Request) {
-  return new Response(JSON.stringify({ message: "GET request" }), {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-}
+// export async function GET(request: Request) {
+//   return new Response(JSON.stringify({ message: "GET request" }), {
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   });
+// }

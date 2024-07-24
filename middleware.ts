@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import {jwtVerify} from 'jose'
 
-const JWT_SECRET = process.env.JWT_SECRET || "POWEIUBFVU";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export async function middleware(request: NextRequest) {
 
@@ -10,12 +10,11 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === "/home") {
     console.log("Home");  
     if (token === undefined) {
-      console.log("No token");
+
       return NextResponse.redirect(new URL("/login", request.url));
     }
     try {
       const {payload} = await jwtVerify(token.value, new TextEncoder().encode(JWT_SECRET));
-      console.log("payload:", payload);
       return NextResponse.next();
     } catch (error) {
       console.error(error);
