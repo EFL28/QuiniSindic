@@ -25,35 +25,10 @@ export async function GET(request: Request) {
     return NextResponse.redirect("/login");
   }
 
-  const data = jwt.verify(token.value, jwtSecret) as jwt.JwtPayload;
+  // const data = jwt.verify(token.value, jwtSecret) as jwt.JwtPayload;
 
   try {
     await prisma.$connect(); // Conectar al cliente Prisma
-    // bucamos con el user el id del user
-    /*const u = await prisma.users.findFirst({
-      where: {
-        username: data.user,
-      },
-    });
-
-    if (u === null) {
-      throw new Error("User not found");
-    }
-
-    // console.log(u);
-    // con el id del user buscamos la prediccion de la jornada actual
-    const pred = await prisma.pronosticos.findFirst({
-      where: {
-        user_id: u.id,
-        matchweek: matchweek,
-      },
-    });
-    
-    const prediction = pred?.prediction
- 
-
-    return NextResponse.json({ prediction });*/
-
     const preds = await prisma.pronosticos.findMany({
         where: {
             matchweek: matchweek,
@@ -68,13 +43,7 @@ export async function GET(request: Request) {
             },
         },
     });
-
-    // console.log(preds);
-
     return NextResponse.json({ preds });
-
-
-    // v2 la respuesta envia todos los pronosticos y el username de cada prediccion
 
   } catch (error) {
     console.error(error);

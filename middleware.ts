@@ -8,7 +8,6 @@ export async function middleware(request: NextRequest) {
   const token = request.cookies.get("auth");
 
   if (request.nextUrl.pathname === "/home") {
-    console.log("Home");  
     if (token === undefined) {
 
       return NextResponse.redirect(new URL("/login", request.url));

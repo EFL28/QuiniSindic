@@ -48,7 +48,7 @@ export async function POST(request: Request) {
         sameSite: "strict",
         path: "/",
       });
-    //console.log(cookie);
+    console.log(cookie);
 
     return new Response(JSON.stringify({ token }), {
       headers: {

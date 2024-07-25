@@ -2,6 +2,7 @@
 import { redirect } from "next/dist/server/api-utils";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function LoginPage() {
   const [user, setUser] = useState("");
@@ -23,10 +24,10 @@ export default function LoginPage() {
       // console.log("data:", data);
       if (res.ok) {
         // console.log("User registered:", data)
-        router.push("/home");
-
+        
         setUser("");
         setPassword("");
+        router.push("/home");
       } else {
         console.error("Error:", data.error);
       }
