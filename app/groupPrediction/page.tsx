@@ -14,8 +14,6 @@ export default function GroupPredictionPage() {
   >([]);
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [numberCols, setNumberCols] = useState(1);
-  const [layoutReady, setLayoutReady] = useState(false);
   const predictionContainerRef = useRef(null);
 
   useEffect(() => {
@@ -42,9 +40,7 @@ export default function GroupPredictionPage() {
         prediction: pred.prediction,
       }));
       setPredictions(fetchedPredictions);
-      setNumberCols(fetchedPredictions.length + 1); // Actualiza numberCols aquí
       setLoading(false);
-      setLayoutReady(true); // Marca el layout como listo
     } catch (error) {
       console.error("Error al obtener las predicciones:", error);
     }
@@ -79,7 +75,7 @@ export default function GroupPredictionPage() {
   };
 
   const currentUser = predictions[currentUserIndex];
-  
+  const numberCols = predictions.length + 1;
 
   return (
     <>
@@ -217,102 +213,95 @@ export default function GroupPredictionPage() {
                   </div>
                 ))}
               </div>
-              {console.log("h",numberCols)}
-              {layoutReady && (
-                
-                <div
-                  className={`hidden xl:grid xl:grid-cols-${numberCols} xl:gap-4`}
-                >
-                  <div>
-                    <div className="text-center font-semibold mb-2">
-                      PARTIDOS
-                    </div>
-                    {matches.map((match, index) => (
-                      <div key={index} className="py-2">
-                        {match.local} - {match.visitante}
-                      </div>
-                    ))}
-                  </div>
-                  {predictions.map((userPrediction, userIndex) => (
-                    <div key={userIndex}>
-                      <div className="text-center font-semibold mb-2">
-                        {userPrediction.username}
-                      </div>
-                      {matches.map((match, index) => (
-                        <div
-                          key={index}
-                          className="py-2 flex justify-center items-center gap-2"
-                        >
-                          {index < 14 ? (
-                            <>
-                              <div
-                                className={`border border-black dark:border-white rounded px-3 py-1 cursor-pointer ${
-                                  userPrediction.prediction[index] === "1"
-                                    ? "bg-primary text-white"
-                                    : ""
-                                }`}
-                              >
-                                1
-                              </div>
-                              <div
-                                className={`border border-black dark:border-white rounded px-3 py-1 cursor-pointer ${
-                                  userPrediction.prediction[index] === "X"
-                                    ? "bg-primary text-white"
-                                    : ""
-                                }`}
-                              >
-                                X
-                              </div>
-                              <div
-                                className={`border border-black dark:border-white rounded px-3 py-1 cursor-pointer ${
-                                  userPrediction.prediction[index] === "2"
-                                    ? "bg-primary text-white"
-                                    : ""
-                                }`}
-                              >
-                                2
-                              </div>
-                            </>
-                          ) : matches.length > 14 ? (
-                            <div className="flex flex-col">
-                              <div className="flex mb-2">
-                                {["0", "1", "2", "M"].map((option) => (
-                                  <div
-                                    key={`${index}-local-${option}`}
-                                    className={`border border-black dark:border-white rounded px-3 py-1 mx-2 cursor-pointer ${
-                                      userPrediction.prediction[index] ===
-                                      option
-                                        ? "bg-primary text-white"
-                                        : ""
-                                    }`}
-                                  >
-                                    {option}
-                                  </div>
-                                ))}
-                              </div>
-                              <div className="flex">
-                                {["0", "1", "2", "M"].map((option) => (
-                                  <div
-                                    key={`${index}-visitante-${option}`}
-                                    className={`border border-black dark:border-white rounded px-3 py-1 mx-2 cursor-pointer ${
-                                      userPrediction.prediction[index] ===
-                                      option
-                                        ? "bg-primary text-white"
-                                        : ""
-                                    }`}
-                                  >
-                                    {option}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          ) : null}
-                        </div>
-                      ))}
+
+              <div
+                className={`hidden xl:grid xl:grid-cols-${numberCols} xl:gap-4`}
+              >
+                <div>
+                  <div className="text-center font-semibold mb-2">PARTIDOS</div>
+                  {matches.map((match, index) => (
+                    <div key={index} className="py-2">
+                      {match.local} - {match.visitante}
                     </div>
                   ))}
                 </div>
-              )}
+                {predictions.map((userPrediction, userIndex) => (
+                  <div key={userIndex}>
+                    <div className="text-center font-semibold mb-2">
+                      {userPrediction.username}
+                    </div>
+                    {matches.map((match, index) => (
+                      <div
+                        key={index}
+                        className="py-2 flex justify-center items-center gap-2"
+                      >
+                        {index < 14 ? (
+                          <>
+                            <div
+                              className={`border border-black dark:border-white rounded px-3 py-1 cursor-pointer ${
+                                userPrediction.prediction[index] === "1"
+                                  ? "bg-primary text-white"
+                                  : ""
+                              }`}
+                            >
+                              1
+                            </div>
+                            <div
+                              className={`border border-black dark:border-white rounded px-3 py-1 cursor-pointer ${
+                                userPrediction.prediction[index] === "X"
+                                  ? "bg-primary text-white"
+                                  : ""
+                              }`}
+                            >
+                              X
+                            </div>
+                            <div
+                              className={`border border-black dark:border-white rounded px-3 py-1 cursor-pointer ${
+                                userPrediction.prediction[index] === "2"
+                                  ? "bg-primary text-white"
+                                  : ""
+                              }`}
+                            >
+                              2
+                            </div>
+                          </>
+                        ) : matches.length > 14 ? (
+                          <div className="flex flex-col">
+                            <div className="flex mb-2">
+                              {["0", "1", "2", "M"].map((option) => (
+                                <div
+                                  key={`${index}-local-${option}`}
+                                  className={`border border-black dark:border-white rounded px-3 py-1 mx-2 cursor-pointer ${
+                                    userPrediction.prediction[index] === option
+                                      ? "bg-primary text-white"
+                                      : ""
+                                  }`}
+                                >
+                                  {option}
+                                </div>
+                              ))}
+                            </div>
+                            <div className="flex">
+                              {["0", "1", "2", "M"].map((option) => (
+                                <div
+                                  key={`${index}-visitante-${option}`}
+                                  className={`border border-black dark:border-white rounded px-3 py-1 mx-2 cursor-pointer ${
+                                    userPrediction.prediction[index] === option
+                                      ? "bg-primary text-white"
+                                      : ""
+                                  }`}
+                                >
+                                  {option}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ) : null}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </>
           )}
         </div>
