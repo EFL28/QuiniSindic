@@ -79,6 +79,7 @@ export default function GroupPredictionPage() {
   };
 
   const currentUser = predictions[currentUserIndex];
+  
 
   return (
     <>
@@ -216,8 +217,9 @@ export default function GroupPredictionPage() {
                   </div>
                 ))}
               </div>
-
+              {console.log("h",numberCols)}
               {layoutReady && (
+                
                 <div
                   className={`hidden xl:grid xl:grid-cols-${numberCols} xl:gap-4`}
                 >
@@ -318,4 +320,3 @@ export default function GroupPredictionPage() {
     </>
   );
 }
-  
