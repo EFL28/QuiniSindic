@@ -12,6 +12,7 @@ export default function GroupPredictionPage() {
   const [predictions, setPredictions] = useState<
     { username: string; prediction: string[] }[]
   >([]);
+  const [numberCols, setNumberCols] = useState(1);
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const predictionContainerRef = useRef(null);
@@ -40,6 +41,7 @@ export default function GroupPredictionPage() {
         prediction: pred.prediction,
       }));
       setPredictions(fetchedPredictions);
+      setNumberCols(fetchedPredictions.length + 1);
       setLoading(false);
     } catch (error) {
       console.error("Error al obtener las predicciones:", error);
@@ -75,7 +77,6 @@ export default function GroupPredictionPage() {
   };
 
   const currentUser = predictions[currentUserIndex];
-  const numberCols = predictions.length + 1;
 
   return (
     <>
@@ -85,7 +86,7 @@ export default function GroupPredictionPage() {
         ref={predictionContainerRef}
       >
         <div className="text-4xl mt-4">Jornada {matchweek}</div>
-        <div className="flex flex-col p-4 w-full lg:w-2/3">
+        <div className="flex flex-col p-4 w-full lg:w-3/4">
           <div className="grid grid-cols-2 text-center text-xl mb-4 xl:hidden">
             <div>PARTIDOS</div>
             <div className="flex justify-center items-center gap-3">
@@ -143,7 +144,7 @@ export default function GroupPredictionPage() {
               <div className="xl:hidden">
                 {matches.map((match, index) => (
                   <div key={index} className="grid grid-cols-2 py-2">
-                    <div>
+                    <div className="text-sm md:text-base ml-4 lg:ml-28">
                       {match.local} - {match.visitante}
                     </div>
                     <div className="flex justify-center items-center gap-6">
