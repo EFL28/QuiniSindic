@@ -3,8 +3,10 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import html2canvas from "html2canvas";
 import Header from "../ui/header";
+import { useRouter } from "next/navigation";
 
 export default function GroupPredictionPage() {
+  const router = useRouter();
   const [matches, setMatches] = useState<
     { local: string; visitante: string }[]
   >([]);
@@ -80,7 +82,20 @@ export default function GroupPredictionPage() {
   return (
     <>
       <Header />
-      <div
+
+      {!predictions || predictions.length === 0 ? (
+        <div className="flex flex-col justify-center items-center h-screen bg-light dark:bg-dark dark:text-white">
+          <div className="text-4xl text-center mb-4">No hay predicciones de tus amigos</div>
+          <button
+            type="submit"
+            onClick={() => router.push("/quiniela")}
+            className="rounded py-3 text-lg bg-primary hover:bg-primary-hover w-64 font-semibold text-white"
+          >
+            Haz tu predicción
+          </button>
+        </div>
+      ) : (
+        <div
         className="flex justify-center items-center flex-col h-full bg-light dark:bg-dark dark:text-white"
         ref={predictionContainerRef}
       >
@@ -305,7 +320,9 @@ export default function GroupPredictionPage() {
             </>
           )}
         </div>
-      </div>
+      </div>) }
+
+      
     </>
   );
 }

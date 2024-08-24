@@ -8,7 +8,11 @@ const prisma = new PrismaClient()
 export async function POST(request: Request) {
   try {
     prisma.$connect()
-    const { username, email, password } = await request.json()
+    let { username, email, password } = await request.json()
+    username = username.trim().toLowerCase();
+    email = email.trim().toLowerCase();
+    password = password.trim();
+
 
     const email_registered = await prisma.users.findUnique({ where: { email } })
     if (email_registered) {
@@ -18,6 +22,11 @@ export async function POST(request: Request) {
     const username_registered = await prisma.users.findUnique({ where: { username } })
     if (username_registered) {
       return new Response(JSON.stringify({ error: 'Username already registered' }), { status: 400 })
+    }
+
+    const password_length = password.length
+    if (password_length < 8) {
+      return new Response(JSON.stringify({ error: 'Password too short' }), { status: 400 })
     }
 
     const password_hashed = await bcrypt.hash(password, 10)

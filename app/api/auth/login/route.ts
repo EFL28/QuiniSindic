@@ -10,7 +10,9 @@ const jwtSecret = process.env.JWT_SECRET;
 export async function POST(request: Request) {
   try {
     await prisma.$connect(); // Conectar al cliente Prisma
-    const { user, password } = await request.json();
+    let { user, password } = await request.json();
+
+    user = user.trim();
 
     const u = await prisma.users.findFirst({
       where: {

@@ -13,6 +13,7 @@ model Users {
   username    String        @unique
   password    String
   created_at  DateTime      @default(now()) @db.Timestamptz(6)
+  score       BigInt?       @default(0)
   Pronosticos Pronosticos[]
 }
 
