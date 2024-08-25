@@ -1,9 +1,9 @@
 'use client';
+import React from 'react';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Spinner } from "@nextui-org/react";
+import { Spinner } from '@nextui-org/react';
 import Modal from "react-modal";
-import axios from "axios";
 
 export default function LoginPage() {
   const [user, setUser] = useState("");
@@ -81,7 +81,7 @@ export default function LoginPage() {
           <div className="font-semibold text-2xl mb-4">
             Iniciando sesión en QuiniSindic
           </div>
-          <Spinner />
+          <Spinner size="lg" color='primary'/>
         </>
       ) : (
         <>

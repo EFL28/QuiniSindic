@@ -17,9 +17,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        {/* You can add any additional head elements here */}
-      </head>
       <body className="font-spartan">
         <NextUIProvider>
           {children}
