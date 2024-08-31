@@ -25,8 +25,6 @@ export async function GET(request: Request) {
     return NextResponse.redirect("/login");
   }
 
-  // const data = jwt.verify(token.value, jwtSecret) as jwt.JwtPayload;
-
   try {
     await prisma.$connect(); // Conectar al cliente Prisma
     const preds = await prisma.pronosticos.findMany({
@@ -43,6 +41,8 @@ export async function GET(request: Request) {
             },
         },
     });
+
+    console.log(preds);
     return NextResponse.json({ preds });
 
   } catch (error) {

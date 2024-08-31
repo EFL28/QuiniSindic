@@ -51,10 +51,10 @@ export default function LoginPage() {
     
     const data = await res.json();
     if (res.ok) {
+      router.push("/home");
       setUser("");
       setPassword("");
       setLoading(false);
-      router.push("/home");
     } else {
       console.error("Error:", data.error);
       setLoading(false);
