@@ -56,6 +56,11 @@ export default function GroupPredictionPage() {
     }
   }, [matchweek]);
 
+  useEffect(() => {
+    console.log("predictions", predictions);
+  }
+  , [predictions]);
+
   const handleUserChange = (direction: "prev" | "next") => {
     setCurrentUserIndex((prevIndex) => {
       if (direction === "prev") {
@@ -157,7 +162,7 @@ export default function GroupPredictionPage() {
               Compartir
             </div>
 
-            {/* Predicciones del user */}
+            {/* Predicciones del user mobile */}
             <div className="xl:hidden">
               {matches.map((match, index) => (
                 <div key={index} className="grid grid-cols-2 py-2">
@@ -195,7 +200,7 @@ export default function GroupPredictionPage() {
                           2
                         </div>
                       </>
-                    ) : matches.length > 14 ? (
+                    ) : (
                       <div className="flex flex-col">
                         <div className="flex mb-2">
                           {["0", "1", "2", "M"].map((option) => (
@@ -216,7 +221,7 @@ export default function GroupPredictionPage() {
                             <div
                               key={`${index}-visitante-${option}`}
                               className={`border border-black dark:border-white rounded px-3 py-1 mx-2 cursor-pointer ${
-                                currentUser?.prediction[index] === option
+                                currentUser?.prediction[index + 1] === option
                                   ? "bg-primary text-white"
                                   : ""
                               }`}
@@ -226,19 +231,18 @@ export default function GroupPredictionPage() {
                           ))}
                         </div>
                       </div>
-                    ) : null}
+                    )}
                   </div>
                 </div>
               ))}
             </div>
 
-            <div
-              className={`hidden xl:grid xl:grid-cols-${numberCols} xl:gap-4`}
-            >
+          {/* Predicciones del user big screens */}
+          <div className="hidden xl:grid xl:auto-cols-fr xl:grid-flow-col xl:gap-4">
               <div>
                 <div className="text-center font-semibold mb-2">PARTIDOS</div>
                 {matches.map((match, index) => (
-                  <div key={index} className="py-2">
+                  <div key={index} className={`py-2 flex items-center ${index === 14 ? 'h-24 mt-7' : 'h-12'}`}>
                     {match.local} - {match.visitante}
                   </div>
                 ))}
@@ -285,7 +289,7 @@ export default function GroupPredictionPage() {
                         </>
                       ) : matches.length > 14 ? (
                         <div className="flex flex-col">
-                          <div className="flex mb-2">
+                          <div className="flex mb-1">
                             {["0", "1", "2", "M"].map((option) => (
                               <div
                                 key={`${index}-local-${option}`}
@@ -304,7 +308,7 @@ export default function GroupPredictionPage() {
                               <div
                                 key={`${index}-visitante-${option}`}
                                 className={`border border-black dark:border-white rounded px-3 py-1 mx-2 cursor-pointer ${
-                                  userPrediction.prediction[index] === option
+                                  userPrediction.prediction[index + 1] === option
                                     ? "bg-primary text-white"
                                     : ""
                                 }`}

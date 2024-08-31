@@ -91,7 +91,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <div className="h-14" /> {/* Placeholder to prevent content from being hidden behind the header */}
+      <div className="h-14 bg-light" /> {/* Placeholder to prevent content from being hidden behind the header */}
     </>
   );
 }
