@@ -51,30 +51,36 @@ export default function SignUpPage() {
     e.preventDefault();
     setLoading(true);
 
-    const res = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, email, password }),
-    });
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
 
-    const data = await res.json();
-    if (res.ok) {
-      setLoading(false);
-      // console.log("User registered:", data);
-      openModal();
-    } else {
-      // abrir modal de error
-      setLoading(false);
+      if (res.ok) {
+        setLoading(false);
+        openModal();
+      } else {
+        const data = await res.json();
+        setError(data.error);
+        setErrorModalIsOpen(true);
+        setLoading(false);
+        setUsername("");
+      setEmail("");
+      setPassword("");
+
+      }
+    } catch (error) {
+      setError("Ha ocurrido un error");
       setErrorModalIsOpen(true);
-      setError(data.error);
-      console.error("Error:", data.error);
+      setLoading(false); 
     }
-
-    setUsername("");
-    setEmail("");
-    setPassword("");
+    // setUsername("");
+    // setEmail("");
+    // setPassword("");
   };
 
   function getErrorMessage(error: string): string {

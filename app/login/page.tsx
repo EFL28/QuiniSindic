@@ -41,25 +41,36 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
 
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ user, password }),
-    });
-    
-    const data = await res.json();
-    if (res.ok) {
-      router.push("/home");
-      setUser("");
-      setPassword("");
-      setLoading(false);
-    } else {
-      console.error("Error:", data.error);
-      setLoading(false);
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user, password }),
+      });
+      console.log('res',res);
+      // const data = await res.json();
+      // console.log('data',data);
+
+      if (res.ok) {
+        setUser("");
+        setPassword("");
+        setLoading(false);
+        router.push("/home");
+      } else {
+        const data = await res.json();
+        setError(data.error);
+        setErrorModalIsOpen(true);
+        setLoading(false);
+        setUser("");
+        setPassword("");
+      }
+    } catch (error) {
+      console.log('error',error);
+      setError("Ha ocurrido un error");
       setErrorModalIsOpen(true);
-      setError(data.error);
+      setLoading(false);
     }
   };
 
